@@ -19,6 +19,7 @@ async function run() {
     const exemptedAuthors = parseAuthors(core.getInput("exemptedAuthors"));
 
     console.log(shouldClose, 'should close');
+
     if (!token) {
       core.setFailed("GITHUB_TOKEN is not available");
       return;
@@ -41,12 +42,12 @@ async function run() {
 
     if (shouldClose) {
       await octokit.graphql(`
-        mutation($id: ID!, $state: String!) {
-          updateIssue(input: { id: $id, state: $state}) {
+        mutation($id: ID!) {
+          updateIssue(input: { id: $id, state: "closed"}) {
             clientMutationId
           }
         }
-      `, { respondableId, "CLOSED" });
+      `, { respondableId });
     }
 
   } catch(error) {
