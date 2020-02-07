@@ -43,7 +43,7 @@ async function run() {
     if (shouldClose) {
       await octokit.graphql(`
         mutation($id: ID!) {
-          updateIssue(input: { id: $id, state: "closed"}) {
+          updateIssue(input: { id: $id, state: CLOSED}) {
             clientMutationId
           }
         }
