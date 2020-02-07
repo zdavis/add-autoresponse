@@ -12,6 +12,7 @@ function parseAuthors(input) {
 async function run() {
   try {
     const respondableId = core.getInput("respondableId", { required: true });
+    const shouldClose = core.getInput("shouldClose", { required: true })
     const response = core.getInput("response", { required: true });
     const author = core.getInput("author", { required: true });
     const token = process.env.GITHUB_TOKEN;
@@ -38,6 +39,17 @@ console.log(response, 'response');
         }
       }
     `, { respondableId, response });
+
+    if (shouldClose) {      
+      await octokit.graphql(`
+        mutation($id: ID!, $state: String!) {
+          updateIssue(input: { id: $id, state: $state}) {
+            clientMutationId
+          }
+        }
+      `, { respondableId, "CLOSED" });
+    }
+
   } catch(error) {
     core.setFailed(`Error adding autoresponse: ${error.message}`);
   }

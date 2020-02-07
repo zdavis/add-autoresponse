@@ -8,6 +8,10 @@ inputs:
   respondableId:
     description: The id of the issue or pull request
     required: true
+  shouldClose:
+    description: close the issue as well
+    required: true
+    default: false
   response:
     description: The response to be left on the issue or pull request
     required: true
