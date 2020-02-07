@@ -17,6 +17,8 @@ async function run() {
     const token = process.env.GITHUB_TOKEN;
     const exemptedAuthors = parseAuthors(core.getInput("exemptedAuthors"));
 
+console.log(response, 'response');
+
     if (!token) {
       core.setFailed("GITHUB_TOKEN is not available");
       return;
